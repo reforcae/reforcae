@@ -1,0 +1,31 @@
+{
+  "name": "reforcae",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reforcae/reforcae",
+  "authors": [
+    "leonascimento <leo386386@gmail.com>",
+    "jessica7 <jessica.nascimento6@gmail.com>"
+  ],
+  "description": "Reforcae a Web App and Platform to reinforce your English",
+  "keywords": [
+    "reforcae",
+    "'aprenda",
+    "ingles'",
+    "reforco",
+    "online"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angularjs": "~1.4.8",
+    "ui-router": "~0.2.15",
+    "bootstrap": "3.3",
+    "angular-resource": "1.3"
+  }
+}

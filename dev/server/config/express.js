@@ -2,7 +2,7 @@ var express    = require("express");
 var corser     = require("corser");
 var bodyParser = require("body-parser");
 
-module.exports = function() {
+module.exports = function(config) {
 
     var app = express();
 

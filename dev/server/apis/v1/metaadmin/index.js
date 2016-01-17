@@ -35,10 +35,10 @@ function this_module ( app ) {
     api.route('/')
         .post(function ( req, res ) {
 
-            var json        = req.body;
-            json.username   = json.username.toLowerCase();
-            json.salt       = encrypt.createSalt();
-            json.password = encrypt.hashPwd( json.salt, json.password );
+            var json       = req.body;
+            json.username  = json.username.toLowerCase();
+            json.salt      = encrypt.createSalt();
+            json.password  = encrypt.hashPwd( json.salt, json.password );
             
             if ( !userModel.hasOwnProperty( 'roles' ) ) { 
                 json.roles = ['ADMIN'];
@@ -49,7 +49,7 @@ function this_module ( app ) {
             }).catch( function ( e ) {
                 if ( e && e.code === 11000 || e && err.code === 11001 ) {
                     var valueErr = new Error( 'This email is already used' );
-                    res.status(400);
+                    res.status(409);
                     return res.send({ err : valueErr.toString() });
                 } else {
                     res.status(500).json({err : 'An error has occurred' + e });

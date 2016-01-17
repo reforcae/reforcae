@@ -38,7 +38,7 @@ function this_module ( app ) {
             var json        = req.body;
             json.username   = json.username.toLowerCase();
             json.salt       = encrypt.createSalt();
-            json.hashed_pwd = encrypt.hashPwd( json.salt, json.hashed_pwd );
+            json.password = encrypt.hashPwd( json.salt, json.password );
             
             if ( !userModel.hasOwnProperty( 'roles' ) ) { 
                 json.roles = ['ADMIN'];

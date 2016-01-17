@@ -5,16 +5,16 @@ module.exports = function () {
     var STATUS = ['ONLINE','OFFLINE',"BUSY"];
 
     var userSchema = new mongoose.Schema({
-        first_name    : { type : String, trim : true },
-        last_name     : { type : String, trim : true },
-        roles         : [ String ],
-        phone_number  : String,
-        username    : { type : String, trim : true },
-        salt        : { type : String },
-        hashed_pwd  : { type : String }, 
-        last_access : Date,
-        online      : { type : String, enum : STATUS },
-        disable     : { type : Boolean, default : false },
+        first_name   : { type : String, trim : true },
+        last_name    : { type : String, trim : true },
+        roles        : [ String ],
+        phone_number : String,
+        username     : { type : String, trim : true },
+        salt         : { type : String },
+        password     : { type : String }, 
+        last_access  : Date,
+        online       : { type : String, enum : STATUS },
+        disable      : { type : Boolean, default : false },
         email : {
             type     : String,
             required : true,

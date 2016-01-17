@@ -5,5 +5,5 @@ var mongoose = require("./config/database.js")("mongodb://localhost:27017/reforc
 var app      = require("./config/express")(config);
 
 http.createServer(app).listen(app.get("port"), function() {
-  console.log( "express running on the port " + app.get("port") );
+    console.log( "express running on the port " + app.get("port") );
 });

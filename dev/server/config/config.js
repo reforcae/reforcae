@@ -4,7 +4,7 @@ var path     = require('path'),
 module.exports = {
   development : {
     rootPath : rootPath,
-    db : 'mongodb://localhost:27017/agenda',
+    db : 'mongodb://localhost:27017/reforcae',
     port : process.env.PORT || 4000
   },
   metaadmin : {

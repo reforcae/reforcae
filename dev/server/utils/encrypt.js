@@ -10,7 +10,7 @@ function  hashPwd( salt, pwd ) {
 };    
 
 function validatePassword( salt, passwordToMatch, hashed_pwd ) {
-   return hashPwd( salt, passwordToMatch ) === hashed_pwd;
+    return hashPwd( salt, passwordToMatch ) === hashed_pwd;
 };
 
 module.exports = {

@@ -32,14 +32,14 @@ module.exports.login = function ( Model, email, password ) {
         _model = Model;
 
     if ( _.isEmpty(email) || _.isEmpty(password) ) 
-        return Q.reject( {code:2, httStatus:403, desc: 'Unauthorized'} );
+        return Q.reject( {code:2, httStatus:401, desc: 'Unauthorized'} );
     
     if ( !validateEmail( email ) ) 
-        return Q.reject( {code:2, httStatus:403, desc: 'Unauthorized'} );
+        return Q.reject( {code:2, httStatus:401, desc: 'Unauthorized'} );
 
     return _getUserByEmail( email ).then(function ( user ) {
         return ( !encrypt.validatePassword( user.salt, password, user.password ) )
-        ? Q.reject({code: 2,httpStatus: 404, desc: 'Unauthorized'})
+        ? Q.reject({code: 2,httpStatus: 401, desc: 'Unauthorized'})
         : _removeAttritubesSchema( user );
     }, function (e) {
         return e;

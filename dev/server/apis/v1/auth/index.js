@@ -10,9 +10,8 @@ function this_module (app) {
     var authService = app.services.authService;
 
     api.post( '/login', function ( req, res ) {
-        var email = req.body.email;
+        var email    = req.body.email;
         var password = req.body.password;
-
         return authService.login( userModel, email, password ).then(function ( auth ) {
             res.json(auth);
         }, function (err) {

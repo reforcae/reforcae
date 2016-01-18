@@ -27,22 +27,31 @@ module.exports.listAndCount = function ( Model, params, start, limit, sort, popu
 
 module.exports.create = function ( Model, json ) {
     var doc = new Model(json);
-    return Q.nsend( doc, 'save' ).spread( function (doc) {
+    return Q.nsend( doc, 'save' ).spread( function ( doc ) {
         return doc;
     });
 };
 
-module.exports.get = function ( Model, query ) {
-    return Q.nsend( Model, 'findById' , query );   
+module.exports.get = function ( Model, params, populates ) {
+    var query = Model.findOne( params );
+    if ( populates ) {
+        _.each( _.isArray( populates ) ? populates : [populates], function ( p ) {
+            query.populate(p);
+        });
+    }
+    return Q.nsend( Model, 'findOne', query );    
 };
 
 module.exports.delete = function ( Model, query ) {
-    var _query = Model.remove(query);
-    return Q.nsend( Model, 'remove' , _query );   
+    if ( _.isEmpty( query ) ) {
+        return Q.reject( 'will not delete without params' );
+    }
+    var _query = Model.remove( query );
+    return Q.nsend( Model, 'remove', _query );   
 };
 
 module.exports.update = function ( Model, id, json ) {
-    return Q.nsend( Model, 'update', id, json ).then( function ( _client ) {
-        return _client;
+    return Q.nsend( Model, 'update', id, json ).then( function ( _user ) {
+        return _user;
     });
 };

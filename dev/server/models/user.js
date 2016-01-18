@@ -11,7 +11,7 @@ module.exports = function () {
         phone_number : String,
         username     : { type : String, trim : true },
         salt         : { type : String },
-        password     : { type : String }, 
+        password     : { type : String , required : true }, 
         last_access  : Date,
         online       : { type : String, enum : STATUS },
         disable      : { type : Boolean, default : false },

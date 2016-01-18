@@ -62,7 +62,12 @@ function this_module ( app ) {
             return userService.update( userModel, _id, json ).then( function ( _user ) {
                 res.status( 200 ).json( { message : 'User was updated successfully' } );
             }, function ( err ) {
-                res.status( 400 ).json({message:'Bad Request'});
+                if ( err && err.code === 11000 || err && err.code === 11001 ) {
+                    var valueErr = new Error('Duplicate Username');
+                    res.status(400).send({ err : valueErr.toString() });
+                } else {
+                    res.status(500).json(err);
+                }
             });
         })        
 

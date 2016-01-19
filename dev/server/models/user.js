@@ -24,6 +24,10 @@ module.exports = function () {
         createdAt: {
             type: Date,
             default: Date.now
+        },
+        pass_recover_token: {
+            token: { type: String, index: true, unique:true, sparse: true },
+            createdAt: Date
         }
     });
 

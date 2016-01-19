@@ -9,5 +9,5 @@ module.exports = {
     },
     metaadmin : {
         token : "dGhpc2lzYXNlY3JldHRva2VubGVv"
-    } 
+    }
 };

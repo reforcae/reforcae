@@ -1,4 +1,4 @@
-var express = require('express');
+var express  = require('express');
 
 exports = module.exports = this_module;
 
@@ -9,6 +9,10 @@ function this_module ( app ) {
     api.use( '/admin'     , require( './admin'     )( app ) );
     api.use( '/metaadmin' , require( './metaadmin' )( app ) );
     api.use( '/auth'      , require( './auth'      )( app ) );
+
+    app.get('/', function ( req, res ) {
+        res.render('index');
+    });
 
     return api;
 

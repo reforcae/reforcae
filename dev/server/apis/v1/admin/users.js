@@ -30,13 +30,10 @@ function this_module ( app ) {
             var user      = req.body;
             user.salt     = encrypt.createSalt();
             user.password = encrypt.hashPwd( user.salt, user.password );
-            // 1. Save Cliente          --->OK
-            // 2. Generate Token        --->OK
-            // 3. Send Email with token --->NO
             return userService.create( userModel, user ).then( function ( _user ) {
                 var newUser = _user.id;
                 authService.saveToken( userModel, newUser ).then( function ( token ) {
-                    console.log(token);
+                    userService.welcomeMessage( _user.email, _user.first_name, token.token, 5 );
                     res.status(201).json(user);   
                 });
             }, function ( err ) {

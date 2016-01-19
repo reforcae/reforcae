@@ -28,6 +28,10 @@ module.exports.create = function ( Model, doc ) {
         doc.username = doc.username.toLowerCase();
     }
 
+    if ( _.isUndefined( doc.roles )) {
+        doc.roles = ['STUDENT'];
+    }
+
     if ( !validateEmail( doc.email )  ) {
         return Q.reject( {code:3, httpStatus:401, err: 'This Email is invalid'} );
     }
@@ -48,17 +52,25 @@ module.exports.update = function ( Model, id, json ) {
 var templateWellcome = fs.readFileSync('./dev/server/views/default/default.hjs','utf-8');
 var compiledTemplate = Hogan.compile(templateWellcome);
 
-module.exports.welcomeMessage = function ( to, name, token ) {
-    console.log(token);
+module.exports.welcomeMessage = function ( to, name, token, expire ) {
     sendgrid.send({
         to      :  to,
         from    :  'reforcae@gmail.com',
-        subject :  'Seja Bem vindo, Ative Seu Cadastro - Reforcae',
-        html    :  compiledTemplate.render( { name: name, token : token } )
+        subject :  'Equipe Reforcae: Bem vindo, ative seu cadastro',
+        html    :  compiledTemplate.render( { name: name, token: token, expire: expire } )
     }, function(err, json) {
         if (err) { 
+            return ('Erro ao enviar email.');
             Q.reject( { message : 'Email não pode ser enviado' } ); 
         }
-        return { message : 'Email eviado com Sucesso ok!!'};
+        return ({ message : 'Email eviado com Sucesso ok!!'}) ;
     });
+};
+
+module.exports.activateEmail = function ( model, id ) {
+    return doActivation( model, id );
+};
+
+function doActivation ( model, id ) {
+    return Q.nsend( model, 'update', { _id: id }, { disable : false } );
 };

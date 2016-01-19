@@ -14,7 +14,7 @@ module.exports = function () {
         password     : { type : String , required : true }, 
         last_access  : Date,
         online       : { type : String, enum : STATUS },
-        disable      : { type : Boolean, default : false },
+        disable      : { type : Boolean, default : true },
         email : {
             type     : String,
             required : true,

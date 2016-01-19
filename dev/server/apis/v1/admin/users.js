@@ -9,6 +9,7 @@ function this_module ( app ) {
 
     var userModel   = app.models.user;
     var userService = app.services.userService;
+    var authService = app.services.authService;
 
     api.route('/')
         .get( function ( req, res )  {
@@ -29,8 +30,15 @@ function this_module ( app ) {
             var user      = req.body;
             user.salt     = encrypt.createSalt();
             user.password = encrypt.hashPwd( user.salt, user.password );
+            // 1. Save Cliente          --->OK
+            // 2. Generate Token        --->OK
+            // 3. Send Email with token --->NO
             return userService.create( userModel, user ).then( function ( _user ) {
-                res.status(201).json(_user);
+                var newUser = _user.id;
+                authService.saveToken( userModel, newUser ).then( function ( token ) {
+                    console.log(token);
+                    res.status(201).json(user);   
+                });
             }, function ( err ) {
                 if ( err && err.code === 11000 || err && err.code === 11001 ) {
                     var valueErr = new Error('Duplicate Username');

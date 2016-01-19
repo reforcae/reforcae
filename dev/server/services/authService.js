@@ -1,7 +1,8 @@
-var baseService = require('./baseService');
-var _           =  require('lodash');
+var _           = require('lodash');
 var Q           = require('q');
 var encrypt     = require('../utils/encrypt.js');
+var config      = require('../config/config.js');
+var randtoken   = require('rand-token');
 var _model;
 
 function _getUserByEmail ( email ) {
@@ -52,5 +53,19 @@ module.exports.get = function ( id, model ) {
         return (!auth)
         ? Q.reject({httpStatus:401, message:'Unauthorized'})
         : auth;
+    });
+};
+
+module.exports.saveToken = function (  userModel, userJson ) {
+    return generateAndSaveToken(  userModel, userJson );
+};
+
+function generateAndSaveToken ( model, userId, retry ) {
+    var newToken = {
+        token     : randtoken.generate(32),
+        createdAt : new Date()
+    };
+    return Q.nsend( model, 'update', { _id: userId }, { pass_recover_token : newToken }).then(function (res) {
+        return newToken;
     });
 };

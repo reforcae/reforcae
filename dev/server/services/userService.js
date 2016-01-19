@@ -1,6 +1,9 @@
 var baseService = require('./baseService.js');
 var _           = require('lodash');
 var Q           = require('q');
+var sendgrid    = require('sendgrid')('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');
+var fs          = require('fs');
+var Hogan       = require('hogan.js');
 
 // utils
 function validateEmail( email ) {
@@ -40,4 +43,22 @@ module.exports.delete = function ( Model, id ) {
 
 module.exports.update = function ( Model, id, json ) {
     return baseService.update( Model, { _id : id }, json);
+};
+
+var templateWellcome = fs.readFileSync('./dev/server/views/default/default.hjs','utf-8');
+var compiledTemplate = Hogan.compile(templateWellcome);
+
+module.exports.welcomeMessage = function ( to, name, token ) {
+    console.log(token);
+    sendgrid.send({
+        to      :  to,
+        from    :  'reforcae@gmail.com',
+        subject :  'Seja Bem vindo, Ative Seu Cadastro - Reforcae',
+        html    :  compiledTemplate.render( { name: name, token : token } )
+    }, function(err, json) {
+        if (err) { 
+            Q.reject( { message : 'Email não pode ser enviado' } ); 
+        }
+        return { message : 'Email eviado com Sucesso ok!!'};
+    });
 };

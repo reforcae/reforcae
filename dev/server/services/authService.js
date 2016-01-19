@@ -65,7 +65,7 @@ function generateAndSaveToken ( model, userId, retry ) {
         token     : randtoken.generate(32),
         createdAt : new Date()
     };
-    return Q.nsend( model, 'update', { _id: userId }, { pass_recover_token : newToken }).then(function (res) {
+    return Q.nsend( model, 'update', { _id: userId }, { pass_recover : newToken }).then(function (res) {
         return newToken;
     });
 };

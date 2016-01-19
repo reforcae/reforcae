@@ -28,14 +28,18 @@
     "express": "^4.13.3",
     "express-load": "^1.1.15",
     "express-session": "^1.12.1",
+    "install": "^0.4.1",
     "lodash": "^3.10.1",
     "method-override": "^2.3.5",
     "mongodb": "^2.1.2",
     "mongoose": "^4.3.4",
     "ms": "^0.7.1",
+    "npm": "^3.5.3",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "q": "^1.4.1",
+    "rand-token": "^0.2.1",
+    "sendgrid": "^2.0.0",
     "ui-router": "^0.2.15"
   },
   "devDependencies": {
